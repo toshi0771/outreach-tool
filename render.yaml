@@ -1,5 +1,4 @@
 services:
-  # Next.jsアプリ本体
   - type: web
     name: outreach-tool
     env: node
@@ -9,13 +8,13 @@ services:
       - key: NODE_ENV
         value: production
       - key: GOOGLE_SERVICE_ACCOUNT_JSON
-        sync: false   # Renderダッシュボードで設定
+        sync: false
       - key: GOOGLE_SHEET_ID
         sync: false
       - key: NEXTAUTH_SECRET
         generateValue: true
       - key: NEXTAUTH_URL
-        sync: false   # 例: https://outreach-tool.onrender.com
+        sync: false
       - key: ALLOWED_EMAILS
         sync: false
       - key: GOOGLE_CLIENT_ID
@@ -23,19 +22,10 @@ services:
       - key: GOOGLE_CLIENT_SECRET
         sync: false
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: outreach-redis
-          property: connectionString
+        sync: false
       - key: DAILY_SEND_LIMIT
         value: "50"
       - key: SEND_INTERVAL_MIN
         value: "30"
       - key: SEND_INTERVAL_MAX
         value: "180"
-
-  # Redis (Bull キュー用)
-  - type: redis
-    name: outreach-redis
-    plan: starter
-    maxmemoryPolicy: noeviction
