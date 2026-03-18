@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: { serverComponentsExternalPackages: ['playwright', 'bull', 'ioredis'] }
+  transpilePackages: [],
+  webpack: (config) => {
+    config.externals = [...(config.externals || []), 'playwright', 'bull', 'ioredis']
+    return config
+  }
 }
 module.exports = nextConfig
