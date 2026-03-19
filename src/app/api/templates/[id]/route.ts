@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getTemplateById, updateTemplate, deleteTemplate } from '../../../lib/sheets/client'
-import { extractVariables } from '../../../lib/sheets/template-renderer'
+import { getTemplateById, updateTemplate, deleteTemplate } from '@/lib/sheets/client'
+import { extractVariables } from '@/lib/sheets/template-renderer'
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {

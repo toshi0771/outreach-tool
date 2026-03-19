@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = [...(config.externals || []), 'playwright', 'bull', 'ioredis']
-    }
-    return config
-  },
   experimental: {
-    serverComponentsExternalPackages: ['playwright', 'bull', 'ioredis']
+    serverComponentsExternalPackages: [
+      'playwright', 'bull', 'ioredis', 'googleapis', 'google-auth-library'
+    ]
   }
 }
 module.exports = nextConfig

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getMessages } from '../../../lib/sheets/client'
+import { getMessages } from '@/lib/sheets/client'
 
 export async function GET() {
   try {
