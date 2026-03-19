@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { nanoid } from 'nanoid'
-import { getSites, createSite, isDuplicateUrl } from '@/lib/sheets/client'
-import type { Site, SiteFilter } from '@/types'
+import { getSites, createSite, isDuplicateUrl } from '../../../lib/sheets/client'
+import type { Site, SiteFilter } from '../../../types'
 
 export async function GET(req: NextRequest) {
   try {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSiteById, updateSite, deleteSite, isDuplicateUrl } from '@/lib/sheets/client'
+import { getSiteById, updateSite, deleteSite, isDuplicateUrl } from '../../../lib/sheets/client'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
   try {

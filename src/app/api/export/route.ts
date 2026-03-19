@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getSites, getMessages } from '@/lib/sheets/client'
+import { getSites, getMessages } from '../../../lib/sheets/client'
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)

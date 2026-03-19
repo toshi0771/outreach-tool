@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { nanoid } from 'nanoid'
-import { getSiteById, getTemplateById, createMessage, updateSite } from '@/lib/sheets/client'
-import { renderTemplate } from '@/lib/sheets/template-renderer'
-import type { Message, BatchPreviewItem } from '@/types'
+import { getSiteById, getTemplateById, createMessage, updateSite } from '../../../lib/sheets/client'
+import { renderTemplate } from '../../../lib/sheets/template-renderer'
+import type { Message, BatchPreviewItem } from '../../../types'
 
 // POST /api/messages/batch-preview
 export async function POST(req: NextRequest) {

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { nanoid } from 'nanoid'
-import { getTemplates, createTemplate } from '@/lib/sheets/client'
-import { extractVariables } from '@/lib/sheets/template-renderer'
-import type { Template } from '@/types'
+import { getTemplates, createTemplate } from '../../../lib/sheets/client'
+import { extractVariables } from '../../../lib/sheets/template-renderer'
+import type { Template } from '../../../types'
 
 export async function GET() {
   try {

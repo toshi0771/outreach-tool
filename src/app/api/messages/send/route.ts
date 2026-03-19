@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getMessages } from '@/lib/sheets/client'
-import { enqueueSubmission } from '@/lib/queue/processor'
+import { getMessages } from '../../../lib/sheets/client'
+import { enqueueSubmission } from '../../../lib/queue/processor'
 
 const MIN_MS = Number(process.env.SEND_INTERVAL_MIN ?? 30) * 1000
 const MAX_MS = Number(process.env.SEND_INTERVAL_MAX ?? 180) * 1000
