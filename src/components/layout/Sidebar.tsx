@@ -4,12 +4,13 @@ import { usePathname } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
 import {
   LayoutDashboard, Globe, FileText, CheckSquare,
-  Send, History, Settings, LogOut, Menu
+  Send, History, Settings, LogOut, Menu, SearchCheck
 } from 'lucide-react'
 import { useState } from 'react'
 
 const navItems = [
   { href: '/dashboard', label: 'ダッシュボード', icon: LayoutDashboard },
+  { href: '/collect', label: 'サイト収集', icon: SearchCheck },
   { href: '/sites', label: 'サイト管理', icon: Globe },
   { href: '/templates', label: 'テンプレート', icon: FileText },
   { href: '/batch', label: 'バッチ承認', icon: CheckSquare },
