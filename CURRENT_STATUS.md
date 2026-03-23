@@ -91,3 +91,9 @@
 
 このファイル（CURRENT_STATUS.md）を新しいチャットにアップロードすれば引き継ぎ可能。
 追加で `outreach-tool-fixed.zip` もアップロードすると完全に引き継ぎができる。
+
+### 2026-03-24
+- Renderのデプロイがタイムアウト（原因：render.yamlでPlaywright Chromiumのインストールがビルド時に実行されていた）
+- render.yamlのbuildCommandからPlaywrightを除去して修正
+- 環境変数のAPIキーが1代目（旧プロジェクト）のままだったことを確認 → 3代目に要更新
+- DevToolsで api/search → 403、api/stats → 500 を確認
