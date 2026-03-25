@@ -4,42 +4,47 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const query = searchParams.get('q')
   const startParam = searchParams.get('start') || '1'
-  // startは1〜91の整数に制限（APIの制約: start + num <= 100）
-  const start = Math.max(1, Math.min(91, parseInt(startParam, 10) || 1))
+  const page = Math.max(1, Math.ceil((parseInt(startParam, 10) || 1) / 10))
 
   if (!query) return NextResponse.json({ error: 'クエリが必要です' }, { status: 400 })
 
-  const apiKey = process.env.GOOGLE_SEARCH_API_KEY
-  const cx = process.env.GOOGLE_SEARCH_CX
+  const apiKey = process.env.SERPER_API_KEY
 
-  if (!apiKey || !cx) {
-    return NextResponse.json({ error: 'Google Search APIの設定がありません' }, { status: 500 })
+  if (!apiKey) {
+    return NextResponse.json({ error: 'Serper APIの設定がありません' }, { status: 500 })
   }
 
   try {
-    const url = new URL('https://www.googleapis.com/customsearch/v1')
-    url.searchParams.set('key', apiKey)
-    url.searchParams.set('cx', cx)
-    url.searchParams.set('q', query)
-    url.searchParams.set('start', String(start))
-    url.searchParams.set('num', '10')
-    url.searchParams.set('lr', 'lang_ja')  // 日本語コンテンツに絞る
-    url.searchParams.set('gl', 'jp')        // 日本のコンテンツを優先
+    const res = await fetch('https://google.serper.dev/search', {
+      method: 'POST',
+      headers: {
+        'X-API-KEY': apiKey,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        q: query,
+        num: 10,
+        page,
+        gl: 'jp',   // 日本のコンテンツを優先
+        hl: 'ja',   // 日本語UIで検索
+      }),
+    })
 
-    const res = await fetch(url.toString())
     const data = await res.json()
 
     if (!res.ok) {
-      const message = data.error?.message || '検索エラー'
-      const status = data.error?.code || res.status
-      console.error('[search] Google API error:', JSON.stringify(data.error))
+      console.error('[search] Serper API error:', JSON.stringify(data))
       return NextResponse.json(
-        { error: message, detail: data.error },
-        { status }
+        { error: data.message || '検索エラー', detail: data },
+        { status: res.status }
       )
     }
 
-    const items = (data.items || []).map((item: { title: string; link: string; snippet: string }) => ({
+    const items = (data.organic || []).map((item: {
+      title: string
+      link: string
+      snippet: string
+    }) => ({
       title: item.title,
       url: item.link,
       snippet: item.snippet,
@@ -47,8 +52,8 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       items,
-      totalResults: data.searchInformation?.totalResults || '0',
-      hasNext: !!data.queries?.nextPage,
+      totalResults: data.searchParameters?.num || '10',
+      hasNext: items.length === 10,
     })
   } catch (e) {
     console.error('[search] Unexpected error:', e)

@@ -97,3 +97,18 @@
 - render.yamlのbuildCommandからPlaywrightを除去して修正
 - 環境変数のAPIキーが1代目（旧プロジェクト）のままだったことを確認 → 3代目に要更新
 - DevToolsで api/search → 403、api/stats → 500 を確認
+
+### 2026-03-25
+- Google Custom Search APIを断念（GCPプロジェクト権限問題が解決せず）
+- Serper.devへ移行決定
+- `src/app/api/search/route.ts` をSerper API対応に書き換え
+- `.env.example` に `SERPER_API_KEY` を追加
+- 削除対象：`GOOGLE_SEARCH_API_KEY`、`GOOGLE_SEARCH_CX`（Render環境変数・GCP）
+
+## 次のアクション（最新）
+1. GCPでAPIキーとCustom Search APIを削除
+2. Programmable Search Engineを削除
+3. serper.dev でアカウント作成 → APIキー取得
+4. Renderの環境変数：`GOOGLE_SEARCH_API_KEY`と`GOOGLE_SEARCH_CX`を削除し`SERPER_API_KEY`を追加
+5. コードをpush → デプロイ確認
+6. サイト収集で「工務店」+「大阪」を検索して動作確認
